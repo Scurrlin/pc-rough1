@@ -3,25 +3,43 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --primary-color: #3498db; /* Bright blue */
+  --secondary-color: #2ecc71; /* Bright green */
+  --background-color: #ecf0f1; /* Light gray */
+  --text-color: #2c3e50; /* Dark blue */
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="text"], button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
 }
