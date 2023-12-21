@@ -1,12 +1,11 @@
-"use client"
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import '../app/globals.css';
 
 const SearchPage = () => {
   const [licenseNumber, setLicenseNumber] = useState('');
   const [properties, setProperties] = useState([]);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,7 +51,7 @@ const SearchPage = () => {
       }
 
       setProperties(data.properties);
-      navigate('/results', { state: { licenseNumber } });
+      router.push(`/results?licenseNumber=${licenseNumber}`);
     } catch (error) {
       console.error('An error occurred while fetching the properties:', error);
     }

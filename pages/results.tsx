@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 interface Property {
   id: string;
@@ -12,8 +12,8 @@ const properties: Property[] = [
 ];
 
 const ResultsPage = () => {  
-  const location = useLocation();
-  const licenseNumber = location.state.licenseNumber;
+  const router = useRouter();
+  const { licenseNumber } = router.query;
 
   const filteredProperties = properties.filter(property => property.licenseNumber === licenseNumber);
 
