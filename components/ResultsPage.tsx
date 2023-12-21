@@ -5,15 +5,23 @@ interface Property {
   id: string;
   name: string;
   address: string;
+  licenseNumber: string; // Add this line
 }
 
-const ResultsPage = () => {
+// Define properties array
+const properties: Property[] = [
+  // Add your properties here
+];
+
+const ResultsPage = () => {  
   const location = useLocation();
-  const properties: Property[] = location.state.properties;
+  const licenseNumber = location.state.licenseNumber;
+
+  const filteredProperties = properties.filter(property => property.licenseNumber === licenseNumber);
 
   return (
     <div>
-      {properties.map((property: Property) => (
+      {filteredProperties.map((property: Property) => (
         <div key={property.id}>
           <h2>{property.name}</h2>
           <p>{property.address}</p>
