@@ -1,5 +1,7 @@
 'use client'
 
+require('dotenv').config();
+
 import React, { useState } from 'react';
 
 const SearchPage = () => {
@@ -9,18 +11,51 @@ const SearchPage = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const appClientId = process.env.APP_CLIENT_ID;
+    const rapidApiKey = process.env.RAPIDAPI_KEY;
+
+    if (!appClientId) {
+      throw new Error('APP_CLIENT_ID is not defined');
+    }
+
+    if (!rapidApiKey) {
+      throw new Error('RAPIDAPI_KEY is not defined');
+    }
+
+    const url = 'https://mls-router1.p.rapidapi.com/cognito-oauth2/token';
+    const options = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'X-RapidAPI-Key': rapidApiKey,
+        'X-RapidAPI-Host': 'mls-router1.p.rapidapi.com'
+      },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        app_client_id: appClientId
+      })
+    };
+
     try {
-      const response = await fetch(`https://your-api-url/properties?licenseNumber=${licenseNumber}`);
+      const response = await fetch(url, options);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (error) {
+        console.error('An error occurred while parsing the JSON:', error);
+        // Here you could also update your state to show an error message in your UI
+        return;
+      }
+
       setProperties(data.properties);
     } catch (error) {
       console.error('An error occurred while fetching the properties:', error);
-      // Here you could also update your state to show an error message in your UI
+  // Here you could also update your state to show an error message in your UI
     }
   };
 
