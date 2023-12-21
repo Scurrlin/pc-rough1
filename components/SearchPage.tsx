@@ -1,14 +1,12 @@
 "use client"
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Replace useHistory with useNavigate
-
-// Your existing code here
+import { useNavigate } from 'react-router-dom';
 
 const SearchPage = () => {
   const [licenseNumber, setLicenseNumber] = useState('');
   const [properties, setProperties] = useState([]);
-  const navigate = useNavigate(); // Replace useHistory with useNavigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,7 +48,6 @@ const SearchPage = () => {
         data = await response.json();
       } catch (error) {
         console.error('An error occurred while parsing the JSON:', error);
-        // Here you could also update your state to show an error message in your UI
         return;
       }
 
@@ -58,7 +55,6 @@ const SearchPage = () => {
       navigate('/results', { state: { licenseNumber } });
     } catch (error) {
       console.error('An error occurred while fetching the properties:', error);
-  // Here you could also update your state to show an error message in your UI
     }
   };
 

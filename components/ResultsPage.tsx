@@ -5,12 +5,10 @@ interface Property {
   id: string;
   name: string;
   address: string;
-  licenseNumber: string; // Add this line
+  licenseNumber: string;
 }
 
-// Define properties array
 const properties: Property[] = [
-  // Add your properties here
 ];
 
 const ResultsPage = () => {  
