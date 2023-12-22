@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 interface Property {
@@ -8,18 +8,25 @@ interface Property {
   licenseNumber: string;
 }
 
-const properties: Property[] = [
-];
-
 const ResultsPage = () => {  
   const router = useRouter();
   const { licenseNumber } = router.query;
 
-  const filteredProperties = properties.filter(property => property.licenseNumber === licenseNumber);
+  const [properties, setProperties] = useState<Property[]>([]);
+
+  useEffect(() => {
+    if (licenseNumber) {
+      // Replace '/api/properties' with your actual API endpoint
+      fetch(`/api/properties?licenseNumber=${licenseNumber}`)
+        .then(response => response.json())
+        .then(data => setProperties(data))
+        .catch(error => console.error(error));
+    }
+  }, [licenseNumber]);
 
   return (
     <div>
-      {filteredProperties.map((property: Property) => (
+      {properties.map((property: Property) => (
         <div key={property.id}>
           <h2>{property.name}</h2>
           <p>{property.address}</p>
